@@ -1,4 +1,6 @@
 node_modules/
 dist/
 .runtime/
+__pycache__/
+*.pyc
 .DS_Store
