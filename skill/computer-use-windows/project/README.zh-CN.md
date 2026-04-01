@@ -5,11 +5,21 @@
   <p>
     <a href="https://github.com/wimi321/windows-computer-use-skill">GitHub</a>
     ·
+    <a href="https://clawhub.ai/wimi321/computer-use-windows">ClawHub</a>
+    ·
     <a href="./README.md">English</a>
     ·
     <a href="./README.ja.md">日本語</a>
   </p>
 </div>
+
+## ClawHub 安装
+
+这个 skill 已发布到 ClawHub，slug 是 [`computer-use-windows`](https://clawhub.ai/wimi321/computer-use-windows)。
+
+```bash
+clawhub install computer-use-windows
+```
 
 ## 项目定位
 
@@ -56,6 +66,12 @@
 - 补测 UAC、管理员窗口、安全桌面、多显示器缩放、焦点切换等边界情况
 
 这一轮会话没有接入真实 Windows 主机，所以这里是“实现完成并已构建”，但还不是“已在 Windows 实机全链路验证”。
+
+## 0.1.1 修复了什么
+
+`0.1.1` 修复了一个 Windows 打包迁移中的关键逻辑问题：共享系统快捷键黑名单的分支判断被改坏了，可能导致 Windows 构建在判断系统级快捷键时使用错误的 denylist。
+
+现在这部分逻辑已经恢复为正确的 `win32` 分支，并且源码树与 bundled skill payload 都已同步修复。
 
 ## 架构
 
@@ -120,6 +136,12 @@ node dist/cli.js
 
 仓库自带顶级 skill：[`skill/computer-use-windows`](./skill/computer-use-windows)
 
+### 方式 A：从 ClawHub 安装
+
+```bash
+clawhub install computer-use-windows
+```
+
 ### PowerShell
 
 ```powershell
@@ -139,6 +161,25 @@ bash skill/computer-use-windows/scripts/install.sh
 ```
 
 如果设置了 `CODEX_HOME`，则使用对应路径。
+
+## 验证矩阵
+
+这次会话里已经完成：
+
+- `npm run check`
+- `npm run build`
+- `runtime/windows_helper.py` 的 Python 编译检查
+- bundled skill 源码完整性检查
+- bundled project 版本同步检查
+- 对 Windows 运行时中截图、剪贴板、前台应用、应用枚举、窗口/显示器映射路径的代码审视
+
+这次还没有真实完成：
+
+- Windows 实机 GUI 控制
+- Windows 实机截图采集
+- 面向真实 Windows 应用的前台窗口 gating
+- UAC / 管理员窗口切换
+- 混合 DPI 多显示器行为
 
 ## 运行说明
 

@@ -17,7 +17,7 @@
  *
  * Canonical names are Rust's own variant names lowercased. Blocklist entries
  * below use ONLY these. "meta" reads odd for Cmd+Q but it's honest: Rust
- * sends Key::Meta, which is Cmd on win32 and Win on win32.
+ * sends Key::Meta, which is Cmd on darwin and Win on win32.
  */
 const CANONICAL_MODIFIER: Readonly<Record<string, string>> = {
   // Key::Meta — "meta"|"super"|"command"|"cmd"|"windows"|"win"
@@ -39,7 +39,7 @@ const CANONICAL_MODIFIER: Readonly<Record<string, string>> = {
   lshift: "shift",
   rshift: "shift",
   // Key::Alt and Key::Option — distinct Rust variants but same keycode on
-  // win32 (kVK_Option). Collapse: cmd+alt+escape and cmd+option+escape
+  // darwin (kVK_Option). Collapse: cmd+alt+escape and cmd+option+escape
   // both Force Quit.
   alt: "alt",
   option: "alt",
@@ -123,9 +123,9 @@ export function normalizeKeySequence(seq: string): string {
  */
 export function isSystemKeyCombo(
   seq: string,
-  platform: "win32" | "win32",
+  platform: "darwin" | "win32",
 ): boolean {
-  const blocklist = platform === "win32" ? BLOCKED_DARWIN : BLOCKED_WIN32;
+  const blocklist = platform === "darwin" ? BLOCKED_DARWIN : BLOCKED_WIN32;
   const { mods, keys } = partitionKeys(seq);
   const prefix = mods.length > 0 ? mods.join("+") + "+" : "";
 

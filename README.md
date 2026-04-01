@@ -5,11 +5,21 @@
   <p>
     <a href="https://github.com/wimi321/windows-computer-use-skill">GitHub</a>
     ·
+    <a href="https://clawhub.ai/wimi321/computer-use-windows">ClawHub</a>
+    ·
     <a href="./README.zh-CN.md">简体中文</a>
     ·
     <a href="./README.ja.md">日本語</a>
   </p>
 </div>
+
+## Install From ClawHub
+
+Published on ClawHub as [`computer-use-windows`](https://clawhub.ai/wimi321/computer-use-windows).
+
+```bash
+clawhub install computer-use-windows
+```
 
 ## Positioning
 
@@ -58,6 +68,12 @@ Still recommended before production use:
 - exercise UAC, elevated apps, secure desktop, multi-monitor scaling, and focus edge cases
 
 This session did not have a live Windows machine attached, so runtime behavior on Windows has been implemented but not end-to-end verified here.
+
+## What Was Fixed In 0.1.1
+
+Version `0.1.1` fixes a Windows packaging regression in the shared system-key blocklist logic. The migrated file had a broken platform branch that could apply the wrong denylist when checking OS-level shortcuts.
+
+That logic now uses the correct `win32` blocklist again, and the fix has been synced into both the source tree and the bundled skill payload.
 
 ## Architecture
 
@@ -122,6 +138,12 @@ See [`examples/mcp-config.json`](./examples/mcp-config.json).
 
 This repo ships a top-level skill at [`skill/computer-use-windows`](./skill/computer-use-windows).
 
+### Option A: Install from ClawHub
+
+```bash
+clawhub install computer-use-windows
+```
+
 ### PowerShell
 
 ```powershell
@@ -141,6 +163,25 @@ After installation, the bundled project lives at:
 ```
 
 If `CODEX_HOME` is set, use that location instead.
+
+## Validation Matrix
+
+Validated in this session:
+
+- `npm run check`
+- `npm run build`
+- Python syntax compile check for `runtime/windows_helper.py`
+- bundled skill source integrity checks
+- bundled project version sync checks
+- review of Windows-specific runtime paths for screenshots, clipboard, frontmost app, app enumeration, and window/display lookup
+
+Not yet validated in this session:
+
+- real Windows GUI control
+- live screenshot capture on Windows
+- foreground-window enforcement against real Windows apps
+- UAC / admin-window transitions
+- mixed-DPI multi-monitor behavior
 
 ## Runtime Notes
 

@@ -1,6 +1,6 @@
 ---
 name: computer-use-windows
-version: 0.1.0
+version: 0.1.1
 description: Top-level Windows computer-use skill with a bundled standalone runtime that bootstraps itself without any local Claude installation, private native modules, or extracted app assets.
 tags:
   - skill
@@ -50,6 +50,11 @@ node dist/cli.js
 ```
 
 The first real run will automatically create `.runtime/venv` and install the public Python dependencies.
+
+## Validation notes
+
+- Version `0.1.1` fixes the shared system-key blocklist logic so Windows runtime builds use the correct Windows shortcut denylist instead of a broken cross-platform branch.
+- This project has been statically validated from macOS for TypeScript build health, bundled project integrity, and Python helper syntax, but still needs end-to-end runtime validation on a real Windows machine.
 
 ## Guardrails
 

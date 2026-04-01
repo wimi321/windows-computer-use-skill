@@ -5,11 +5,21 @@
   <p>
     <a href="https://github.com/wimi321/windows-computer-use-skill">GitHub</a>
     ·
+    <a href="https://clawhub.ai/wimi321/computer-use-windows">ClawHub</a>
+    ·
     <a href="./README.md">English</a>
     ·
     <a href="./README.zh-CN.md">简体中文</a>
   </p>
 </div>
+
+## ClawHub からインストール
+
+この skill は ClawHub に [`computer-use-windows`](https://clawhub.ai/wimi321/computer-use-windows) として公開済みです。
+
+```bash
+clawhub install computer-use-windows
+```
 
 ## このプロジェクトの位置づけ
 
@@ -56,6 +66,12 @@
 - UAC、管理者権限ウィンドウ、secure desktop、マルチモニタ拡大率、フォーカス境界の確認
 
 このセッションには実際の Windows マシンが接続されていないため、ここでの状態は「実装済み・build 済み」であり、「Windows 実機で end-to-end 検証済み」ではありません。
+
+## 0.1.1 で修正したこと
+
+`0.1.1` では、Windows 向けパッケージング移行時に壊れていた共有 system-key blocklist の分岐を修正しました。誤ったプラットフォーム分岐により、Windows で OS レベルのショートカット判定に間違った denylist が使われる可能性がありました。
+
+現在は正しい `win32` 分岐に戻してあり、この修正はソース本体と bundled skill payload の両方に同期されています。
 
 ## アーキテクチャ
 
@@ -120,6 +136,12 @@ node dist/cli.js
 
 同梱 skill: [`skill/computer-use-windows`](./skill/computer-use-windows)
 
+### Option A: ClawHub からインストール
+
+```bash
+clawhub install computer-use-windows
+```
+
 ### PowerShell
 
 ```powershell
@@ -139,6 +161,25 @@ bash skill/computer-use-windows/scripts/install.sh
 ```
 
 `CODEX_HOME` が設定されている場合はその配下を使います。
+
+## 検証マトリクス
+
+このセッションで完了したもの:
+
+- `npm run check`
+- `npm run build`
+- `runtime/windows_helper.py` の Python compile check
+- bundled skill ソース整合性チェック
+- bundled project の version sync チェック
+- Windows runtime における screenshot / clipboard / frontmost app / app enumeration / window-display lookup 経路のコードレビュー
+
+このセッションでは未実施:
+
+- 実機 Windows での GUI 制御
+- 実機 Windows での screenshot capture
+- 実アプリに対する foreground-window gating
+- UAC / 管理者ウィンドウ遷移
+- mixed-DPI マルチモニタ検証
 
 ## 実行メモ
 
